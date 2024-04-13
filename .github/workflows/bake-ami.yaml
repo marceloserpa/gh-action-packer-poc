@@ -3,12 +3,8 @@ name: Bake AMI
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags' 
+      version:
+        description: 'AMI version' 
 
 jobs:
   hcp-packer:
@@ -30,10 +26,10 @@ jobs:
 
       - name: Run `packer validate`
         id: validate
-        run: "packer validate --var 'version=0.000.5' --var 'vpc_id=${{env.VPC_ID}}' --var 'subnet_id=${{env.SUBNET_ID}}' ./aws-amazonlinux-custom.pkr.hcl"
+        run: "packer validate --var 'version=${{ github.event.inputs.version }}' --var 'vpc_id=${{env.VPC_ID}}' --var 'subnet_id=${{env.SUBNET_ID}}' ./aws-amazonlinux-custom.pkr.hcl"
 
       - name: Build Artifact
-        run: packer build --var 'version=0.000.5' --var 'vpc_id=${{env.VPC_ID}}' --var 'subnet_id=${{env.SUBNET_ID}}' ./aws-amazonlinux-custom.pkr.hcl
+        run: packer build --var 'version=${{ github.event.inputs.version }}' --var 'vpc_id=${{env.VPC_ID}}' --var 'subnet_id=${{env.SUBNET_ID}}' ./aws-amazonlinux-custom.pkr.hcl
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
