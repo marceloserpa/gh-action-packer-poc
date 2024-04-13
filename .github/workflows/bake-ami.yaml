@@ -33,7 +33,7 @@ jobs:
         run: "packer validate --var 'version=0.000.5' --var 'vpc_id=${{env.VPC_ID}}' --var 'subnet_id=${{env.SUBNET_ID}}' ./aws-amazonlinux-custom.pkr.hcl"
 
       - name: Build Artifact
-        run: packer build --var 'version=0.000.5' --var 'vpc_id=${{env.VPC_ID}}' --var 'subnet_id=${{env.SUBNET_ID}}' -color=false -on-error=abort ./aws-amazonlinux-custom.pkr.hcl
+        run: packer build --var 'version=0.000.5' --var 'vpc_id=${{env.VPC_ID}}' --var 'subnet_id=${{env.SUBNET_ID}}' ./aws-amazonlinux-custom.pkr.hcl
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
