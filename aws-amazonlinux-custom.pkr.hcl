@@ -10,6 +10,10 @@ variable "subnet_id" {
   type = string
 }
 
+locals {
+  ami_name = "custom-al2023"
+}
+
 packer {
   required_plugins {
     amazon = {
@@ -20,7 +24,7 @@ packer {
 }
   
 source "amazon-ebs" "custom-os-al2023" {
-  ami_name      = "custom-os-al2023-ami-${var.version}"
+  ami_name      = "${var.ami_name}-ami-${var.version}"
   instance_type = "t2.micro"
   region        = "us-east-1"
   source_ami  = "ami-051f8a213df8bc089"
