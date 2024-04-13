@@ -39,7 +39,7 @@ source "amazon-ebs" "custom-os-al2023" {
   ssh_username = "ec2-user"
   
   tags = {
-    Name = "${ami_name}"
+    Name = "${local.ami_name}"
     Version = "${var.version}"
   }  
 
