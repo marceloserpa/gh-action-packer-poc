@@ -12,6 +12,8 @@ variable "subnet_id" {
 
 locals {
   ami_name = "custom-al2023"
+  region = "us-east-1"
+  base_ami = "ami-051f8a213df8bc089"
 }
 
 packer {
@@ -24,10 +26,10 @@ packer {
 }
   
 source "amazon-ebs" "custom-os-al2023" {
-  ami_name      = "${var.ami_name}-ami-${var.version}"
+  ami_name      = "${local.ami_name}-ami-${var.version}"
   instance_type = "t2.micro"
-  region        = "us-east-1"
-  source_ami  = "ami-051f8a213df8bc089"
+  region        = "${local.region}"
+  source_ami  = "${local.base_ami}"
 
   vpc_id = "${var.vpc_id}"
   subnet_id = "${var.subnet_id}"
